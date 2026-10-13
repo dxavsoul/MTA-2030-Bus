@@ -1,0 +1,102 @@
+{
+  "entities": {
+    "depot_route": {
+      "title": "DepotRouteAssignment",
+      "description": "Custom route to depot assignment override",
+      "type": "object",
+      "properties": {
+        "routeId": { "type": "string", "maxLength": 64 },
+        "depotId": { "type": "string", "maxLength": 64 },
+        "assignedBy": { "type": "string", "maxLength": 128 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["routeId", "depotId"]
+    },
+    "user_profile": {
+      "title": "UserProfile",
+      "description": "User profile and moderation state",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "photoURL": { "type": "string", "maxLength": 512 },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "isBlocked": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "isBlocked"]
+    },
+    "adwords_campaign": {
+      "title": "AdWordsCampaign",
+      "description": "Sponsored depot and corridor marketing campaign",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "sponsorName": { "type": "string", "maxLength": 128 },
+        "headline": { "type": "string", "maxLength": 256 },
+        "targetDepotId": { "type": "string", "maxLength": 64 },
+        "targetRouteId": { "type": "string", "maxLength": 64 },
+        "clickUrl": { "type": "string", "maxLength": 512 },
+        "status": { "type": "string", "enum": ["active", "paused"] },
+        "impressions": { "type": "number" },
+        "clicks": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "sponsorName", "headline", "targetDepotId", "status"]
+    },
+    "transit_alert": {
+      "title": "TransitAlert",
+      "description": "Service bulletin broadcast across maps and corridor feeds",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "title": { "type": "string", "maxLength": 128 },
+        "message": { "type": "string", "maxLength": 512 },
+        "severity": { "type": "string", "enum": ["urgent", "warning", "info"] },
+        "targetRouteId": { "type": "string", "maxLength": 64 },
+        "targetDepotId": { "type": "string", "maxLength": 64 },
+        "isActive": { "type": "boolean" },
+        "publishedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "message", "severity", "isActive"]
+    },
+    "route_subscription": {
+      "title": "RouteSubscription",
+      "description": "Commuter notification subscription for transit routes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "routeId": { "type": "string", "maxLength": 64 },
+        "stopId": { "type": "string", "maxLength": 64 },
+        "alertMinutesThreshold": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "routeId", "alertMinutesThreshold"]
+    }
+  },
+  "firestore": {
+    "/depot_routes/{routeId}": {
+      "schema": "depot_route",
+      "description": "Depot route assignment overrides managed by transit dispatchers"
+    },
+    "/users/{userId}": {
+      "schema": "user_profile",
+      "description": "User profile with moderation status and roles"
+    },
+    "/adwords_campaigns/{campaignId}": {
+      "schema": "adwords_campaign",
+      "description": "AdWords sponsored campaigns displayed as glowing pins and banners"
+    },
+    "/transit_alerts/{alertId}": {
+      "schema": "transit_alert",
+      "description": "Transit alerts floating over the map viewport"
+    },
+    "/subscriptions/{subId}": {
+      "schema": "route_subscription",
+      "description": "Commuter route notification alerts"
+    }
+  }
+}

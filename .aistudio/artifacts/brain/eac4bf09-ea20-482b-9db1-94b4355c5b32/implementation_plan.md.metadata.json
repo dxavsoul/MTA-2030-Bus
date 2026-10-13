@@ -1,0 +1,6 @@
+{
+  "summary": "Comprehensive architectural and design plan to add a full-screen Administration Dashboard with view toggle, dynamic depot-route assignments, user blocking and account management, AdWords/sponsored campaign creation, normal user route notification subscriptions, and real-time map reflection via sponsored depot pins and transit alert popup banners backed by Firebase Auth and Firestore.",
+  "updatedAt": "2026-10-12T22:49:18.640120069Z",
+  "requestFeedback": true,
+  "userFacing": true
+}
